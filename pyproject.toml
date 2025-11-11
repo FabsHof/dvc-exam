@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "dvc>=3.63.0",
+    "dvc[s3]>=3.63.0",
     "pandas>=2.3.3",
     "scikit-learn>=1.7.2",
 ]
