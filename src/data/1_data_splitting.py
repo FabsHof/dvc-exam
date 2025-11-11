@@ -3,11 +3,14 @@ from sklearn.model_selection import train_test_split
 import os
 import pandas as pd
 
-def split_data(raw_data_path="./data/raw/raw.csv", processed_data_path="./data/processed"):
+def split_data(raw_data_path="./data/raw_data/raw.csv", processed_data_path="./data/processed_data"):
     ''' Split raw data into train and test sets and save them in the appropriate folders.
     Produces the following 4 files: X_test.csv, X_train.csv, y_test.csv, y_train.csv.'''
     # Load raw data
     df = pd.read_csv(raw_data_path)
+
+    # Drop columns with non fitting value types (e.g., date)
+    df = df.select_dtypes(include=['number'])
 
     # Target and feature separation
     target = df['silica_concentrate']

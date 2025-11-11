@@ -1,7 +1,36 @@
 import requests
 import os
 import logging
-from utils.check_structure import check_existing_file, check_existing_folder
+import os
+
+def check_existing_file(file_path):
+    '''Check if a file already exists. If it does, ask if we want to overwrite it.'''
+    if os.path.isfile(file_path):
+        while True:
+            response = input(f"File {os.path.basename(file_path)} already exists. Do you want to overwrite it? (y/n): ")
+            if response.lower() == 'y':
+                return True
+            elif response.lower() == 'n':
+                return False
+            else:
+                print("Invalid response. Please enter 'y' or 'n'.")
+    else:
+        return True
+    
+    
+def check_existing_folder(folder_path):
+    '''Check if a folder already exists. If it doesn't, ask if we want to create it.'''
+    if os.path.exists(folder_path) == False :
+        while True:
+            response = input(f"{os.path.basename(folder_path)} doesn't exists. Do you want to create it? (y/n): ")
+            if response.lower() == 'y':
+                return True
+            elif response.lower() == 'n':
+                return False
+            else:
+                print("Invalid response. Please enter 'y' or 'n'.")
+    else:
+        return False
 
 def import_raw_data(raw_data_relative_path, 
                     filenames,
@@ -26,11 +55,11 @@ def import_raw_data(raw_data_relative_path,
             else:
                 print(f'Error accessing the object {input_file}:', response.status_code)
 
-def main(raw_data_relative_path="./data/raw", 
+def main(raw_data_relative_path="./data/raw_data", 
         filenames = ["raw.csv"],
-        bucket_folder_url= "https://datascientest-mlops.s3.eu-west-1.amazonaws.com/mlops_dvc_fr/raw.csv"   
+        bucket_folder_url= "https://datascientest-mlops.s3.eu-west-1.amazonaws.com/mlops_dvc_fr"   
         ):
-    """ Upload data from AWS s3 in ./data/raw
+    """ Upload data from AWS s3 in ./data/raw_data
     """
     import_raw_data(raw_data_relative_path, filenames, bucket_folder_url)
     logger = logging.getLogger(__name__)
